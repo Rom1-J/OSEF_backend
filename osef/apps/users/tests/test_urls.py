@@ -1,7 +1,7 @@
 import pytest
 from django.urls import resolve, reverse
 
-from osef.users.models import User
+from osef.apps.users.models import User
 
 pytestmark = pytest.mark.django_db
 

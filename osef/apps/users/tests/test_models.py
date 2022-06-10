@@ -1,6 +1,6 @@
 import pytest
 
-from osef.users.models import User
+from osef.apps.users.models import User
 
 pytestmark = pytest.mark.django_db
 

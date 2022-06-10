@@ -45,18 +45,18 @@ graph_model:
 #######################
 .PHONY: lint
 lint:
-	$(PYTHON_PATH) -m pylint chat \
+	$(PYTHON_PATH) -m pylint osef \
 		--load-plugins=pylint_django \
 		--django-settings-module=config.settings.local
 
 .PHONY: black
 black:
-	$(PYTHON_PATH) -m black chat
+	$(PYTHON_PATH) -m black osef
 	$(PYTHON_PATH) -m black config
 
 .PHONY: type
 type:
-	$(PYTHON_PATH) -m mypy chat
+	$(PYTHON_PATH) -m mypy osef
 
 .PHONY: style
 style: black type lint
