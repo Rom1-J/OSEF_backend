@@ -1,8 +1,15 @@
 [MASTER]
 load-plugins=pylint_django
 django-settings-module=config.settings.base
+ignore=
+    tests,
+    migrations
+disable=
+	W0221,  # arguments-differ
+	R0903,  # too-few-public-methods
+
 [FORMAT]
-max-line-length=120
+max-line-length=79
 
 [MESSAGES CONTROL]
 disable=missing-docstring,invalid-name
