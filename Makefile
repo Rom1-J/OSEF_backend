@@ -8,7 +8,7 @@ MANAGE_PY := DJANGO_READ_DOT_ENV_FILE=True $(PYTHON_PATH) manage.py
 #######################
 .PHONY: run
 run:
-	$(MANAGE_PY) runserver_plus 0.0.0.0:8000
+	$(MANAGE_PY) runserver_plus 0.0.0.0:8000 --keep-meta-shutdown
 
 .PHONY: console
 console: shell
