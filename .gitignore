@@ -331,11 +331,6 @@ osef/media/
 
 ### Custom
 
-osef/media/
-
-.pytest_cache/
-
-
 dump.rdb
 .envs/.production
 
