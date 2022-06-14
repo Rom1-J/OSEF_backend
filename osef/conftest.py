@@ -1,7 +1,7 @@
 import pytest
 
-from osef.users.models import User
-from osef.users.tests.factories import UserFactory
+from osef.apps.users.models import User
+from osef.apps.users.tests.factories import UserFactory
 
 
 @pytest.fixture(autouse=True)

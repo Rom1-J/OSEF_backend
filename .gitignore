@@ -330,3 +330,14 @@ MailHog
 osef/media/
 
 .pytest_cache/
+
+
+### Custom
+
+dump.rdb
+.envs/.production
+
+key.pem
+cert.pem
+
+.env
