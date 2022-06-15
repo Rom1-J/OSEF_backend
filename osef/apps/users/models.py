@@ -1,26 +1,37 @@
-from django.contrib.auth.models import AbstractUser
-from django.db.models import CharField
-from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
+import datetime
+import uuid
+
+from django.db import models
 
 
-class User(AbstractUser):
-    """
-    Default custom user model for OSEF.
-    If adding fields that need to be filled at user signup,
-    check forms.SignupForm and forms.SocialSignupForms accordingly.
-    """
+class User(models.Model):
+    id = models.UUIDField("Identification", primary_key=True, default=uuid.uuid4(), editable=False)
+    username = models.CharField("Username", max_length=20)
+    email = models.EmailField("Email", max_length=20)
+    password = models.CharField("Password", max_length=20)
+    avatar = models.ImageField("Avatar")
+    creation_date = models.DateField("Creation Date", default=datetime.date.today)
+    last_connection = models.DateField("Last Connection")
+    friend_code = models.IntegerField("Friend code")
+    pub_key = models.CharField("Public Key")
 
-    #: First and last name do not cover name patterns around the globe
-    name = CharField(_("Name of User"), blank=True, max_length=255)
-    first_name = None  # type: ignore
-    last_name = None  # type: ignore
 
-    def get_absolute_url(self):
-        """Get url for user's detail view.
+class Transaction(models.Model):
+    token = models.UUIDField("Token", primary_key=True, default=uuid.uuid4(), editable=False)
+    user1_id = models.CharField("User 1 Identification")
+    user2_id = models.CharField("User 1 Identification")
+    creation_date = models.DateField("Creation Date", default=datetime.date.today)
+    nb_new_file = models.IntegerField("Number of New Files")
 
-        Returns:
-            str: URL for user detail.
 
-        """
-        return reverse("users:detail", kwargs={"username": self.username})
+class File(models.Model):
+    id = models.UUIDField("Identification", primary_key=True, default=uuid.uuid4(), editable=False)
+    filename = models.CharField("Filename", max_length=30)
+    data = models.CharField("Data")
+    checksum = models.CharField("Checksum")
+    upload_date = models.DateField("Upload Date")
+    owner = models.CharField("Owner")
+    receiver = models.CharField("Receiver")
+    times_downloaded = models.IntegerField("Times Downloaded")
+    transaction_token = models.CharField("Transaction Token")
+
