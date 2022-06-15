@@ -1,37 +1,34 @@
 import datetime
 import uuid
+import hashlib
 
-from django.db import models
-
-
-class User(models.Model):
-    id = models.UUIDField("Identification", primary_key=True, default=uuid.uuid4(), editable=False)
-    username = models.CharField("Username", max_length=20)
-    email = models.EmailField("Email", max_length=20)
-    password = models.CharField("Password", max_length=20)
-    avatar = models.ImageField("Avatar")
-    creation_date = models.DateField("Creation Date", default=datetime.date.today)
-    last_connection = models.DateField("Last Connection")
-    friend_code = models.IntegerField("Friend code")
-    pub_key = models.CharField("Public Key")
+from django.contrib.auth.models import AbstractUser
+from django.db.models import CharField, UUIDField, ImageField, IntegerField, DateField
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 
-class Transaction(models.Model):
-    token = models.UUIDField("Token", primary_key=True, default=uuid.uuid4(), editable=False)
-    user1_id = models.CharField("User 1 Identification")
-    user2_id = models.CharField("User 1 Identification")
-    creation_date = models.DateField("Creation Date", default=datetime.date.today)
-    nb_new_file = models.IntegerField("Number of New Files")
+class User(AbstractUser):
+    id = UUIDField(_("Identification"), primary_key=True, default=uuid.uuid4(), editable=False)
+    avatar = ImageField(_("Avatar"))
+    last_connection = DateField(_("Last Connection"), default=datetime.date.today)
+    friend_code = IntegerField(_("Friend code"), max_length=8)
+    pub_key = CharField(_("Public Key"))
 
+    def get_absolute_url(self):
+        """Get url for user's detail view.
+        Returns:
+            str: URL for user detail.
+        """
+        return reverse("users:detail", kwargs={"username": self.username,
+                                               "email": self.email,
+                                               "friend_code": self.friend_code,
+                                               "avatar_url": self.avatar.url})
 
-class File(models.Model):
-    id = models.UUIDField("Identification", primary_key=True, default=uuid.uuid4(), editable=False)
-    filename = models.CharField("Filename", max_length=30)
-    data = models.CharField("Data")
-    checksum = models.CharField("Checksum")
-    upload_date = models.DateField("Upload Date")
-    owner = models.CharField("Owner")
-    receiver = models.CharField("Receiver")
-    times_downloaded = models.IntegerField("Times Downloaded")
-    transaction_token = models.CharField("Transaction Token")
+    def generate_salt(self):
+        """Get unique salt for user's key creation. DO NOT STORE IT OR SHARE THE METHOD.
+        :return:
+            str: Unique salt for user
+        """
 
+        return hashlib.sha256(self.id + self.email).hexdigest()
