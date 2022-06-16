@@ -22,7 +22,7 @@ class UserAdmin(auth_admin.UserAdmin):
                     "first_name",
                     "last_name",
                     "avatar",
-                    "pub_key"
+                    "pub_key",
                 )
             },
         ),

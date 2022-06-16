@@ -26,7 +26,7 @@ urlpatterns += [
         name="api-docs",
     ),
     path("api/users/", include("osef.apps.users.urls")),
-    path("api/accounts/", include("allauth.urls"))
+    path("api/accounts/", include("allauth.urls")),
 ]
 
 if settings.DEBUG:

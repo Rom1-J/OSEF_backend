@@ -11,9 +11,7 @@ def test_user_detail(user: User):
         reverse("api:user-detail", kwargs={"id": user.id})
         == f"/api/users/{user.id}/"
     )
-    assert (
-        resolve(f"/api/users/{user.id}/").view_name == "api:user-detail"
-    )
+    assert resolve(f"/api/users/{user.id}/").view_name == "api:user-detail"
 
 
 def test_user_list():

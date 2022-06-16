@@ -19,10 +19,7 @@ class User(AbstractUser):
 
     friend_code = RandomCharField(_("Friend code"), length=10, unique=True)
     pub_key = models.TextField(
-        _("Public Key"),
-        default=None,
-        blank=True,
-        null=True
+        _("Public Key"), default=None, blank=True, null=True
     )
 
     def get_absolute_url(self):
