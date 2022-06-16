@@ -1,6 +1,8 @@
+import base64
 from typing import Any, Sequence
 
 from django.contrib.auth import get_user_model
+from django.utils.crypto import get_random_string
 from factory import Faker, post_generation
 from factory.django import DjangoModelFactory
 
@@ -10,6 +12,8 @@ class UserFactory(DjangoModelFactory):
     username = Faker("user_name")
     email = Faker("email")
     first_name = Faker("name")
+
+    pub_key = base64.b64encode(get_random_string(length=32).encode())
 
     @post_generation
     def password(self, create: bool, extracted: Sequence[Any], **kwargs):

@@ -25,6 +25,8 @@ urlpatterns += [
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
     ),
+    path("api/users/", include("osef.apps.users.urls")),
+    path("api/accounts/", include("allauth.urls"))
 ]
 
 if settings.DEBUG:

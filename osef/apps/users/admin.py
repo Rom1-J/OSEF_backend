@@ -16,7 +16,15 @@ class UserAdmin(auth_admin.UserAdmin):
         (None, {"fields": ("username", "password")}),
         (
             _("Personal info"),
-            {"fields": ("email", "first_name", "last_name", "avatar")},
+            {
+                "fields": (
+                    "email",
+                    "first_name",
+                    "last_name",
+                    "avatar",
+                    "pub_key"
+                )
+            },
         ),
         (
             _("Permissions"),

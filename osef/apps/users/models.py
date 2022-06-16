@@ -18,7 +18,12 @@ class User(AbstractUser):
     avatar = models.ImageField(_("Avatar"), default=None, blank=True)
 
     friend_code = RandomCharField(_("Friend code"), length=10, unique=True)
-    pub_key = models.TextField(_("Public Key"), default=None, blank=True)
+    pub_key = models.TextField(
+        _("Public Key"),
+        default=None,
+        blank=True,
+        null=True
+    )
 
     def get_absolute_url(self):
         """Get url for user's detail view.
@@ -29,7 +34,7 @@ class User(AbstractUser):
         return reverse(
             "users:detail",
             kwargs={
-                "friend_code": self.friend_code,
+                "id": self.id,
             },
         )
 

@@ -26,6 +26,8 @@ class TestUserAdmin:
             url,
             data={
                 "username": "test",
+                "email": "john@doe.fr",
+                "pub_key": "A6bQCryZDfhJcuV55RPRQtd8yqIEO8hNQfm2XW+GgWw=",
                 "password1": "My_R@ndom-P@ssw0rd",
                 "password2": "My_R@ndom-P@ssw0rd",
             },

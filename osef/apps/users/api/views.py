@@ -1,3 +1,4 @@
+import uuid
 from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.decorators import action
@@ -19,10 +20,10 @@ class UserViewSet(
 ):
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    lookup_field = "username"
+    lookup_field = "id"
 
     def get_queryset(self, *args, **kwargs):
-        assert isinstance(self.request.user.id, int)  # type: ignore
+        assert isinstance(self.request.user.id, uuid.UUID)  # type: ignore
         return self.queryset.filter(id=self.request.user.id)  # type: ignore
 
     @action(detail=False)

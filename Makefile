@@ -1,7 +1,8 @@
 VIRTUAL_ENV := venv
 PYTHON_PATH := $(VIRTUAL_ENV)/bin/python
 
-MANAGE_PY := DJANGO_READ_DOT_ENV_FILE=True $(PYTHON_PATH) manage.py
+BASE := DJANGO_READ_DOT_ENV_FILE=True
+MANAGE_PY := $(BASE) $(PYTHON_PATH) manage.py
 
 #######################
 # Dev
@@ -23,7 +24,7 @@ manage:
 
 .PHONY: test
 test:
-	$(PYTHON_PATH) -m pytest $(ARGS)
+	$(BASE) $(PYTHON_PATH) -m pytest $(ARGS)
 
 #######################
 # Database
