@@ -1,8 +1,7 @@
 from django.urls import re_path
 from django.views.generic import TemplateView
 
-from .views import VueCSSView, VueJSView, VueImgView
-
+from .views import VueCSSView, VueImgView, VueJSView
 
 app_name = "vue"
 urlpatterns = [
@@ -21,6 +20,6 @@ urlpatterns = [
     re_path(
         "^.*$",
         TemplateView.as_view(template_name="dist/index.html"),
-        name="home"
+        name="home",
     ),
 ]

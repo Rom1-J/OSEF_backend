@@ -14,8 +14,7 @@ class VueCSSView(View):
 
         if local_path.exists() and local_path.is_file():
             return HttpResponse(
-                local_path.read_text(),
-                content_type="text/css"
+                local_path.read_text(), content_type="text/css"
             )
 
         return HttpResponse(status=404)
@@ -31,8 +30,7 @@ class VueJSView(View):
 
         if local_path.exists() and local_path.is_file():
             return HttpResponse(
-                local_path.read_text(),
-                content_type="application/javascript"
+                local_path.read_text(), content_type="application/javascript"
             )
 
         return HttpResponse(status=404)
@@ -45,16 +43,14 @@ class VueImgView(View):
         file_path = settings.ROOT_DIR / "osef/templates" / self.template_name
 
         local_path = file_path / path
-        ext = local_path.split('.')[-1]
+        ext = local_path.split(".")[-1]
 
         if local_path.exists() and local_path.is_file():
             if ext in ["svg", "png", "jpg", "jpeg"]:
                 content_type = f"image/{ext}"
 
                 return HttpResponse(
-                    local_path.read_bytes(),
-                    content_type=content_type
+                    local_path.read_bytes(), content_type=content_type
                 )
 
         return HttpResponse(status=404)
-
