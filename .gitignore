@@ -341,3 +341,5 @@ key.pem
 cert.pem
 
 .env
+
+.idea/misc.xml
