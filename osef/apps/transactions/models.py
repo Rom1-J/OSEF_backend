@@ -14,13 +14,17 @@ class Transaction(models.Model):
         User,
         verbose_name="User 1",
         on_delete=models.SET_DEFAULT,
-        related_name="transactions",
+        related_name="transaction_user1",
+        default=None,
+        blank=True,
     )
     user2 = models.ForeignKey(
         User,
         verbose_name="User 2",
         on_delete=models.SET_DEFAULT,
-        related_name="transactions",
+        related_name="transaction_user2",
+        default=None,
+        blank=True,
     )
     nb_new_file = models.IntegerField(_("Number of New Files"), default=0)
 
@@ -45,14 +49,18 @@ class File(models.Model):
     owner = models.ForeignKey(
         User,
         verbose_name="Owner Id",
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_DEFAULT,
         related_name="files_owned",
+        default=None,
+        blank=True,
     )
     receiver = models.ForeignKey(
         User,
         verbose_name="Receiver Id",
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_DEFAULT,
         related_name="files_received",
+        default=None,
+        blank=True,
     )
 
     times_downloaded = models.IntegerField(_("Times Downloaded"), default=0)
@@ -62,6 +70,8 @@ class File(models.Model):
         verbose_name="Transaction",
         on_delete=models.SET_DEFAULT,
         related_name="files",
+        default=None,
+        blank=True,
     )
 
     def checksum_match(self, check):

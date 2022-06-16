@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django_extensions.db.fields import RandomCharField
 
 
 class User(AbstractUser):
@@ -14,10 +15,10 @@ class User(AbstractUser):
         default=uuid.uuid4,
         editable=False,
     )
-    avatar = models.ImageField(_("Avatar"))
+    avatar = models.ImageField(_("Avatar"), default=None, blank=True)
 
-    friend_code = models.IntegerField(_("Friend code"), max_length=8)
-    pub_key = models.CharField(_("Public Key"))
+    friend_code = RandomCharField(_("Friend code"), length=10, unique=True)
+    pub_key = models.TextField(_("Public Key"), default=None, blank=True)
 
     def get_absolute_url(self):
         """Get url for user's detail view.

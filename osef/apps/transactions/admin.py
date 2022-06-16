@@ -7,7 +7,7 @@ from .models import File, Transaction
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
     fieldsets = (
-        (_("Global"), {"fields": ("token")}),
+        (_("Global"), {"fields": ("token",)}),
         (
             _("Clients info"),
             {
