@@ -1,14 +1,15 @@
 from django.urls import path
 
 from osef.apps.users.views import (
-    user_detail_view,
-    user_redirect_view,
-    user_update_view,
+    UserDetailView,
+    UserUpdateView,
+    UserRedirectView,
 )
 
-app_name = "users"
+app_name="users"
 urlpatterns = [
-    path("~redirect/", view=user_redirect_view, name="redirect"),
-    path("~update/", view=user_update_view, name="update"),
-    path("<uuid:id>/", view=user_detail_view, name="detail"),
+    path("<uuid:id>/", view=UserDetailView.as_view(), name="detail"),
+    path("~update/", view=UserUpdateView.as_view(), name="update"),
+    path("~redirect/", view=UserRedirectView.as_view(), name="redirect"),
+
 ]

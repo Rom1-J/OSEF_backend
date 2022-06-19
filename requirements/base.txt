@@ -11,9 +11,7 @@ redis==4.3.3  # https://github.com/redis/redis-py
 django==4.0.5  # pyup: < 4.0  # https://www.djangoproject.com/
 django-environ==0.9.0  # https://github.com/joke2k/django-environ
 django-model-utils==4.2.0  # https://github.com/jazzband/django-model-utils
-django-allauth==0.51.0  # https://github.com/pennersr/django-allauth
-django-crispy-forms==1.14.0  # https://github.com/django-crispy-forms/django-crispy-forms
-crispy-bootstrap5==0.6  # https://github.com/django-crispy-forms/crispy-bootstrap5
+# django-allauth==0.51.0  # https://github.com/pennersr/django-allauth
 django-compressor==4.0  # https://github.com/django-compressor/django-compressor
 django-redis==5.2.0  # https://github.com/jazzband/django-redis
 # Django REST Framework
@@ -25,3 +23,4 @@ drf-spectacular==0.22.1  # https://github.com/tfranzel/drf-spectacular
 # Custom
 # ------------------------------------------------------------------------------
 django-jazzmin==2.5.0  # https://github.com/farridav/django-jazzmin
+dj-rest-auth[with_social]==2.2.4

@@ -1,17 +1,20 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.views import defaults as default_views
+from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
 
+from osef.apps.users.views import ConfirmEmailView
+
 # noinspection PyTypeChecker
 urlpatterns = [
-    # Django Admin, use {% url 'admin:index' %}
-    path(settings.ADMIN_URL, admin.site.urls),
-    # Your stuff: custom urls includes go here
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  # Django Admin, use {% url 'admin:index' %}
+                  path(settings.ADMIN_URL, admin.site.urls),
+                  # Your stuff: custom urls includes go here
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS
 urlpatterns += [
@@ -25,8 +28,19 @@ urlpatterns += [
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
     ),
+
+    path("api/accounts/", include("dj_rest_auth.urls")),
+    re_path(
+        r"^api/accounts/registration/account-confirm-email/(?P<key>[-:\w]+)/$",
+        ConfirmEmailView.as_view(),
+        name='account_confirm_email',
+    ),
+    path(
+        "api/accounts/registration/",
+        include("dj_rest_auth.registration.urls")
+    ),
+
     path("api/users/", include("osef.apps.users.urls")),
-    path("api/accounts/", include("allauth.urls")),
 ]
 
 if settings.DEBUG:
@@ -54,9 +68,9 @@ if settings.DEBUG:
         import debug_toolbar
 
         urlpatterns = [
-            path("__debug__/", include(debug_toolbar.urls))
-        ] + urlpatterns
+                          path("__debug__/", include(debug_toolbar.urls))
+                      ] + urlpatterns
 
 urlpatterns += [
-    path("", include("osef.apps.vue.urls", namespace="vue")),
+    path("", include("osef.apps.vue.urls")),
 ]

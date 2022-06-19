@@ -1,10 +1,16 @@
-from django.urls import re_path
+from django.urls import re_path, path
 from django.views.generic import TemplateView
 
 from .views import VueCSSView, VueImgView, VueJSView
 
 app_name = "vue"
+vue_template = TemplateView.as_view(template_name="frontend/dist/index.html")
 urlpatterns = [
+    # Blank urls
+    path("login/", vue_template, name="account_login"),
+    path("signup/", vue_template, name="account_signup"),
+    path("invalid-email/", vue_template, name="account_invalid_email"),
+
     re_path(
         r"^css/(?P<path>[a-zA-Z0-9/.~\-]+)$",
         VueCSSView.as_view(),
@@ -19,7 +25,7 @@ urlpatterns = [
     ),
     re_path(
         "^.*$",
-        TemplateView.as_view(template_name="dist/index.html"),
+        vue_template,
         name="home",
     ),
 ]

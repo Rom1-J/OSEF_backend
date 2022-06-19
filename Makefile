@@ -18,13 +18,17 @@ console: shell
 shell:
 	$(MANAGE_PY) shell
 
-.PHONY: manage
-manage:
-	$(MANAGE_PY) $(ARGS)
-
 .PHONY: test
 test:
 	$(BASE) $(PYTHON_PATH) -m pytest $(ARGS)
+
+ifeq (manage,$(firstword $(MAKECMDGOALS)))
+  MANAGE_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  $(eval $(MANAGE_ARGS):;@:)
+endif
+.PHONY: manage
+manage:
+	$(MANAGE_PY) $(MANAGE_ARGS)
 
 #######################
 # Database

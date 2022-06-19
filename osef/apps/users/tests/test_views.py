@@ -14,7 +14,7 @@ from osef.apps.users.tests.factories import UserFactory
 from osef.apps.users.views import (
     UserRedirectView,
     UserUpdateView,
-    user_detail_view,
+    UserDetailView,
 )
 
 pytestmark = pytest.mark.django_db
@@ -86,7 +86,7 @@ class TestUserDetailView:
         request = rf.get("/fake-url/")
         request.user = UserFactory()
 
-        response = user_detail_view(request, id=user.id)
+        response = UserDetailView.as_view()(request, id=user.id)
 
         assert response.status_code == 200
 
@@ -94,7 +94,7 @@ class TestUserDetailView:
         request = rf.get("/fake-url/")
         request.user = AnonymousUser()
 
-        response = user_detail_view(request, id=user.id)
+        response = UserDetailView.as_view()(request, id=user.id)
         login_url = reverse(settings.LOGIN_URL)
 
         assert isinstance(response, HttpResponseRedirect)

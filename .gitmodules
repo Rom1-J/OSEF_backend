@@ -1,3 +1,3 @@
-[submodule "osef/templates"]
-	path = osef/templates
+[submodule "osef/templates/frontend"]
+	path = osef/templates/frontend
 	url = git@github.com:J-Hack-Sparrow/frontend
