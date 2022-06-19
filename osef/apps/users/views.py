@@ -1,21 +1,18 @@
 from typing import Optional
 
 from allauth.account.adapter import get_adapter
-from django.contrib import messages
+from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
+from allauth.account.views import LogoutFunctionalityMixin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.sites.shortcuts import get_current_site
-from django.http import Http404, JsonResponse
+from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import DetailView, RedirectView, UpdateView
-
-from allauth.account.models import EmailConfirmationHMAC, EmailConfirmation
-from allauth.account.views import LogoutFunctionalityMixin
-from rich import inspect
 
 User = get_user_model()
 
@@ -107,6 +104,9 @@ class ConfirmEmailView(LogoutFunctionalityMixin, View):
         return ctx
 
     def get_redirect_url(self):
-        return get_adapter(self.request).get_email_confirmation_redirect_url(
-            self.request
-        ) or "home"
+        return (
+            get_adapter(self.request).get_email_confirmation_redirect_url(
+                self.request
+            )
+            or "home"
+        )

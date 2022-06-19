@@ -12,9 +12,9 @@ from osef.apps.users.forms import UserAdminChangeForm
 from osef.apps.users.models import User
 from osef.apps.users.tests.factories import UserFactory
 from osef.apps.users.views import (
+    UserDetailView,
     UserRedirectView,
     UserUpdateView,
-    UserDetailView,
 )
 
 pytestmark = pytest.mark.django_db
