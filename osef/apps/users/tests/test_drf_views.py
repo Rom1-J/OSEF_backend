@@ -29,5 +29,9 @@ class TestUserViewSet:
         assert response.data == {
             "username": user.username,
             "first_name": user.first_name,
+            "last_name": user.last_name,
+            "avatar": user.avatar or None,
+            "friend_code": user.friend_code,
+            "pub_key": str(user.pub_key),
             "url": f"http://testserver/api/users/{user.id}/",
         }
