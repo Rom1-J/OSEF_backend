@@ -7,7 +7,6 @@ from .models import File, Transaction
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
     fieldsets = (
-        (_("Global"), {"fields": ("token",)}),
         (
             _("Clients info"),
             {
@@ -17,14 +16,22 @@ class TransactionAdmin(admin.ModelAdmin):
                 )
             },
         ),
-        (
-            _("Files info"),
-            {"fields": ("nb_new_file",)},
-        ),
     )
 
-    list_display = ["token", "user1", "user2", "nb_new_file"]
-    search_fields = ["token", "user1", "user2"]
+    list_display = ["token", "user1", "user2", "get_nb_new_files"]
+    search_fields = [
+        "token",
+        "user1__id",
+        "user1__friend_code",
+        "user1__username",
+        "user1__first_name",
+        "user1__last_name",
+        "user2__id",
+        "user2__friend_code",
+        "user2__username",
+        "user2__first_name",
+        "user2__last_name",
+    ]
 
 
 @admin.register(File)
@@ -34,7 +41,6 @@ class FileAdmin(admin.ModelAdmin):
             _("Global"),
             {
                 "fields": (
-                    "id",
                     "file",
                     "checksum",
                 )
@@ -48,10 +54,6 @@ class FileAdmin(admin.ModelAdmin):
                     "receiver",
                 )
             },
-        ),
-        (
-            _("Transactions info"),
-            {"fields": ("times_downloaded", "transaction")},
         ),
     )
 

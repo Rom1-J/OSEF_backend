@@ -1,0 +1,44 @@
+[
+  {
+    "model": "users.user",
+    "pk": "c52d7715-bf4c-4bab-98f6-39b75128cfc2",
+    "fields": {
+      "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$d051MFZLRDBycWR0QzgySmg5cFNlaw$1eK3TKcoHP6/lANY18PG/QtVdPvMzRVgmB3lRUm/2vk",
+      "last_login": "2022-06-21T07:32:30.245Z",
+      "is_superuser": true,
+      "username": "JohnDoe",
+      "first_name": "John",
+      "last_name": "Doe",
+      "email": "john@doe.fr",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2022-06-20T08:59:00.825Z",
+      "avatar": "sus.png",
+      "friend_code": "qU58ESBjzX",
+      "pub_key": "",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "f7951d2e-3c02-4731-bec1-c27f1c280a6c",
+    "fields": {
+      "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$YWhTNmllS3c4VTdlMm9DeVpjajhwbw$+qxPY7a/yNJoz1Xkodoz9TBkV9A3pfBDauGfEC8mlb0",
+      "last_login": "2022-06-20T09:37:12.518Z",
+      "is_superuser": false,
+      "username": "JaneDoe",
+      "first_name": "",
+      "last_name": "",
+      "email": "jane@doe.fr",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-06-20T09:34:39.379Z",
+      "avatar": "",
+      "friend_code": "iubIuSWOS5",
+      "pub_key": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]

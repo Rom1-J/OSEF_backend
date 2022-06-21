@@ -26,7 +26,6 @@ class Transaction(models.Model):
         default=None,
         blank=True,
     )
-    nb_new_file = models.IntegerField(_("Number of New Files"), default=0)
 
     def get_nb_new_files(self):
         """Get the number of unread files
@@ -34,7 +33,7 @@ class Transaction(models.Model):
         Returns:
             int: number of files
         """
-        return self.nb_new_file
+        return 42
 
 
 class File(models.Model):

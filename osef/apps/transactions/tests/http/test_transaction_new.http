@@ -1,0 +1,13 @@
+GET http://127.0.0.1:8000/api/transactions/new/
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+Cookie: csrftoken=zYlNMb6ZbL3UIo9fPOd4ShMN9rwI9He492gbC07LtneTqAGo7hukeaKsP7VTKX2O; sessionid=oi112bbc7xandijnl2yx467ja0c2e29v
+
+--WebAppBoundary--
+Content-Disposition: form-data; name="username"
+
+john@doe.fr
+--WebAppBoundary--
+Content-Disposition: form-data; name="password"
+
+MySuperPassword
+###
