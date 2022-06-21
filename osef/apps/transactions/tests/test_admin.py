@@ -3,11 +3,6 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 
 from osef.apps.transactions.models import File, Transaction
-from osef.apps.transactions.tests.fixtures import (
-    file_fixture,
-    transaction_fixture,
-    user_fixture,
-)
 from osef.apps.users.models import User
 
 pytestmark = pytest.mark.django_db
@@ -89,11 +84,3 @@ class TestFileAdmin:
         )
         response = admin_client.get(url)
         assert response.status_code == 200
-
-
-# =============================================================================
-
-user1 = user_fixture
-user2 = user_fixture
-transaction = transaction_fixture
-file = file_fixture
