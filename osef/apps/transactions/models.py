@@ -27,13 +27,18 @@ class Transaction(models.Model):
         blank=True,
     )
 
-    def get_nb_new_files(self):
+    def get_file_count(self):
         """Get the number of unread files
 
         Returns:
             int: number of files
         """
-        return 42
+        return self.files.count()
+
+    def __str__(self):
+        return "Transaction user1='{}' <-> user2='{}'".format(
+            self.user1, self.user2
+        )
 
 
 class File(models.Model):
@@ -44,7 +49,6 @@ class File(models.Model):
         editable=False,
     )
     file = models.FileField(_("File"))
-    checksum = models.CharField(_("Checksum"), max_length=256)
     owner = models.ForeignKey(
         User,
         verbose_name="Owner Id",
@@ -62,8 +66,6 @@ class File(models.Model):
         blank=True,
     )
 
-    times_downloaded = models.IntegerField(_("Times Downloaded"), default=0)
-
     transaction = models.ForeignKey(
         Transaction,
         verbose_name="Transaction",
@@ -73,13 +75,4 @@ class File(models.Model):
         blank=True,
     )
 
-    def checksum_match(self, check):
-        """Verify if checksum is the same
-
-        Params:
-            check:
-                str: checksum of the downloaded file before decipher
-        Returns:
-                bool: True if checksum match, False elsewhere
-        """
-        return check == self.checksum
+    times_downloaded = models.IntegerField(_("Times Downloaded"), default=0)

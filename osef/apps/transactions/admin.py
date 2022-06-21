@@ -18,7 +18,7 @@ class TransactionAdmin(admin.ModelAdmin):
         ),
     )
 
-    list_display = ["token", "user1", "user2", "get_nb_new_files"]
+    list_display = ["token", "user1", "user2", "get_file_count"]
     search_fields = [
         "token",
         "user1__id",
@@ -39,12 +39,7 @@ class FileAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             _("Global"),
-            {
-                "fields": (
-                    "file",
-                    "checksum",
-                )
-            },
+            {"fields": ("file", "transaction")},
         ),
         (
             _("Clients info"),
@@ -57,5 +52,17 @@ class FileAdmin(admin.ModelAdmin):
         ),
     )
 
-    list_display = ["id", "checksum", "owner", "receiver"]
-    search_fields = ["id", "checksum", "owner"]
+    list_display = ["id", "owner", "receiver"]
+    search_fields = [
+        "id",
+        "owner__id",
+        "owner__friend_code",
+        "owner__username",
+        "owner__first_name",
+        "owner__last_name",
+        "receiver__id",
+        "receiver__friend_code",
+        "receiver__username",
+        "receiver__first_name",
+        "receiver__last_name",
+    ]
