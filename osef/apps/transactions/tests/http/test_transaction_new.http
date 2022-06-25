@@ -1,6 +1,6 @@
-GET http://127.0.0.1:8000/api/transactions/new/
+POST http://127.0.0.1:8000/api/transactions/newnew/
 Content-Type: multipart/form-data; boundary=WebAppBoundary
-Cookie: csrftoken=zYlNMb6ZbL3UIo9fPOd4ShMN9rwI9He492gbC07LtneTqAGo7hukeaKsP7VTKX2O; sessionid=oi112bbc7xandijnl2yx467ja0c2e29v
+Cookie: csrftoken=EHh7Y5d2Ir0XLWvnCHkyLvtOkJQDF2qZaagyvvvwuOpZAgPQEIqGvsnOgglXYXOk; sessionid=5bbw9lrwrtd03eg318n5z5rb06ruxwyh
 
 --WebAppBoundary--
 Content-Disposition: form-data; name="username"
