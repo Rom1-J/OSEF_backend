@@ -13,6 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
             "avatar",
             "friend_code",
             "pub_key",
+            "salt",
             "url",
         ]
 
