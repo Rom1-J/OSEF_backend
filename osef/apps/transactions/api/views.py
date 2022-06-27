@@ -24,7 +24,7 @@ class TransactionsViewSet(
     serializer_class = TransactionSerializer
     permission_classes = [permissions.IsAuthenticated]
     queryset = Transaction.objects.all()
-    lookup_field = "id"
+    lookup_field = "token"
 
     def get_queryset(self, *args, **kwargs):
         assert isinstance(self.request.user.id, uuid.UUID)  # type: ignore
@@ -33,7 +33,7 @@ class TransactionsViewSet(
             | Q(user2=self.request.user)  # type: ignore
         )
 
-    def perform_create(self, serializer: TransactionSerializer):
+    def perform_create(self, serializer: TransactionSerializer) -> None:
         user1 = serializer.validated_data["user1"]
         user2 = serializer.validated_data["user2"]
 
@@ -57,7 +57,52 @@ class TransactionsViewSet(
         self.perform_create(serializer)
 
         return Response(
-            {"Success": "Transaction pending..."},
+            {"status": "success", "message": "Transaction pending..."},
             status=status.HTTP_201_CREATED,
             headers=self.get_success_headers(serializer.data),
+        )
+
+    # =========================================================================
+
+    def retrieve(
+        self, request: Request, *args: Any, **kwargs: Any
+    ) -> Response:
+        instance: Transaction = self.get_object()
+
+        if (instance.user2 == self.request.user) and not instance.accepted:
+            instance.accepted = True
+            instance.save()
+            send_mail(
+                subject=_("%s has accepted to connect")
+                % instance.user2.username,
+                message=_("Hi %s, %s has just accepted your connection!")
+                % (instance.user1.username, instance.user2.username),
+                from_email="no-reply@osef.net",
+                recipient_list=[instance.user1.email],
+            )
+
+            return Response(
+                {
+                    "status": "success",
+                    "message": "Transaction accepted!",
+                    "data": {
+                        "token": instance.token,
+                        "user1": str(instance.user1),
+                        "user2": str(instance.user2),
+                    },
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            {
+                "status": "success",
+                "message": "",
+                "data": {
+                    "token": instance.token,
+                    "user1": str(instance.user1),
+                    "user2": str(instance.user2),
+                },
+            },
+            status=status.HTTP_200_OK,
         )
