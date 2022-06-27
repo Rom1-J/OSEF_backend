@@ -27,6 +27,8 @@ class Transaction(models.Model):
         blank=True,
     )
 
+    accepted = models.BooleanField(default=False)
+
     def get_file_count(self):
         """Get the number of unread files
 

@@ -1,25 +1,23 @@
 import uuid
+from typing import Any
 
-from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Q
 from rest_framework import permissions, status
-from rest_framework.decorators import action
 from rest_framework.mixins import (
+    CreateModelMixin,
     ListModelMixin,
     RetrieveModelMixin,
-    UpdateModelMixin,
 )
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-
-from osef.apps.users.models import User
 
 from ..models import Transaction
 from .serializers import TransactionSerializer
 
 
 class TransactionsViewSet(
-    RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet
+    RetrieveModelMixin, ListModelMixin, CreateModelMixin, GenericViewSet
 ):
     serializer_class = TransactionSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -33,29 +31,21 @@ class TransactionsViewSet(
             | Q(user2=self.request.user)  # type: ignore
         )
 
-    @action(detail=False, methods=["POST"])
-    def new(self, request: WSGIRequest):
-        friend_code = request.POST.get("friend_code")
+    def perform_create(self, serializer: TransactionSerializer):
+        user1 = serializer.validated_data["user1"]
+        user2 = serializer.validated_data["user2"]
 
-        if user2 := User.objects.filter(friend_code=friend_code).first():
-            if Transaction.objects.filter(
-                Q(Q(user1=self.request.user) & Q(user2=user2))
-                | Q(Q(user2=self.request.user) & Q(user1=user2))
-            ):
-                return Response(
-                    status=status.HTTP_409_CONFLICT,
-                    data={"message": "transaction already exists"},
-                )
+        if user1 and user2:
+            serializer.save()
 
-            transaction = Transaction(user1=request.user, user2=user2)
-            transaction.save()
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-            return Response(
-                status=status.HTTP_200_OK,
-                data={"message": "transaction created"},
-            )
+        self.perform_create(serializer)
 
         return Response(
-            status=status.HTTP_404_NOT_FOUND,
-            data={"message": "transaction not created"},
+            {"Success": "Transaction pending..."},
+            status=status.HTTP_201_CREATED,
+            headers=self.get_success_headers(serializer.data),
         )
