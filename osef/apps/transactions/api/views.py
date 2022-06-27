@@ -3,6 +3,7 @@ from typing import Any
 
 from django.core.mail import send_mail
 from django.db.models import Q
+from django.urls import reverse
 from django.utils.translation import gettext as _
 from rest_framework import permissions, status
 from rest_framework.mixins import (
@@ -41,11 +42,19 @@ class TransactionsViewSet(
             Q(Q(user1=user1) & Q(user2=user2))
             | Q(Q(user2=user1) & Q(user1=user2))
         ).count() == 0:
-            serializer.save()
+            transaction = serializer.save()
+
+            accept_url = reverse(
+                "api:transaction-detail", kwargs={"token": transaction.token}
+            )
+
             send_mail(
                 subject=_("%s asked to connect") % user1.username,
-                message=_("Hi %s, please add me to your OSEF network")
-                % user1.username,
+                message=_(
+                    "Hi %s, please add me to your OSEF network "
+                    "<a href='%s'>%s</a>"
+                )
+                % (user1.username, accept_url, accept_url),
                 from_email="no-reply@osef.net",
                 recipient_list=[user2.email],
             )

@@ -10,14 +10,17 @@ class TestTransactionAPIUrls:
     def test_transaction_detail(self, transaction: Transaction):
         assert (
             reverse(
-                "api:transaction-detail",
-                kwargs={"token": transaction.token}
-            ) == f"/api/transactions/{transaction.token}/"
+                "api:transaction-detail", kwargs={"token": transaction.token}
+            )
+            == f"/api/transactions/{transaction.token}/"
         )
-        assert resolve(
-            f"/api/transactions/{transaction.token}/"
-        ).view_name == "api:transaction-detail"
+        assert (
+            resolve(f"/api/transactions/{transaction.token}/").view_name
+            == "api:transaction-detail"
+        )
 
     def test_user_list(self):
         assert reverse("api:transaction-list") == "/api/transactions/"
-        assert resolve("/api/transactions/").view_name == "api:transaction-list"
+        assert (
+            resolve("/api/transactions/").view_name == "api:transaction-list"
+        )
