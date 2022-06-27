@@ -8,9 +8,8 @@ class TransactionSerializer(serializers.ModelSerializer):
         model = Transaction
         fields = ["token", "user1", "user2"]
 
-        extra_kwargs = {
-            "url": {
-                "view_name": "api:transaction-detail",
-                "lookup_field": "token",
-            }
-        }
+
+class NewTransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transaction
+        fields = ["token", "user1", "user2"]

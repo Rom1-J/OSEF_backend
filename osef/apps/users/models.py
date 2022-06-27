@@ -17,7 +17,7 @@ class User(AbstractUser):
     )
     avatar = models.ImageField(_("Avatar"), default=None, blank=True)
 
-    friend_code = RandomCharField(_("Friend code"), length=10, unique=True)
+    friend_code = RandomCharField(_("Friend code"), length=6, unique=True)
     pub_key = models.TextField(
         _("Public Key"), default=None, blank=True, null=True
     )
