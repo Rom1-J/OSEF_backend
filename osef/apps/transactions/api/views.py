@@ -37,7 +37,10 @@ class TransactionsViewSet(
         user1 = serializer.validated_data["user1"]
         user2 = serializer.validated_data["user2"]
 
-        if user1 and user2:
+        if (user1 and user2) and Transaction.objects.filter(
+            Q(Q(user1=user1) & Q(user2=user2))
+            | Q(Q(user2=user1) & Q(user1=user2))
+        ).count() == 0:
             serializer.save()
             send_mail(
                 subject=_("%s asked to connect") % user1.username,
