@@ -34,27 +34,30 @@ class UserViewSet(
 
     @action(detail=False, methods=["PUT"])
     def pubkey(self, request):
-        inspect(request.data["pub_key"])
         instance: User = User.objects.filter(id=request.user.id).first()
 
         pub_key = request.data["pub_key"]
         if pub_key:
             instance.pub_key = pub_key
             instance.save()
-            return Response({
-                "status": "success",
-                "message": "pub_key modified",
+            return Response(
+                {
+                    "status": "success",
+                    "message": "pub_key modified",
+                    "data": {
+                        "pub_key": instance.pub_key,
+                        "username": instance.username,
+                    },
+                },
+                status=status.HTTP_200_OK,
+            )
+        return Response(
+            {
+                "status": "failed",
+                "message": "Wrong key given",
                 "data": {
-                    "pub_key": instance.pub_key,
-                    "username": instance.username,
+                    "pub_key": pub_key,
                 },
             },
-                status=status.HTTP_200_OK)
-        return Response({
-            "status": "bad request",
-            "message": "Wrong key given",
-            "data": {
-                "pub_key": pub_key,
-            },
-        },
-            status=status.HTTP_400_BAD_REQUEST)
+            status=status.HTTP_400_BAD_REQUEST,
+        )

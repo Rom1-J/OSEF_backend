@@ -43,4 +43,6 @@ class User(AbstractUser):
             str: Unique salt for user
         """
 
-        return hashlib.sha256((str(self.id) + self.email + self.password).encode('utf-8')).hexdigest()
+        return hashlib.sha256(
+            (str(self.id) + self.email + self.password).encode("utf-8")
+        ).hexdigest()
