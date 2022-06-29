@@ -73,7 +73,9 @@ class FileSerializer(serializers.ModelSerializer):
     # =========================================================================
 
     def validate_transaction(self, value: Transaction):
-        if self.context["request"].user not in (value.user1, value.user2):
+        if (
+            self.context["request"].user not in (value.user1, value.user2)
+        ) or not value.accepted:
             raise serializers.ValidationError("Unknown transaction.")
 
         return value
