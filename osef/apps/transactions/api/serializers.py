@@ -13,10 +13,19 @@ class TransactionSerializer(serializers.ModelSerializer):
     token = serializers.UUIDField(read_only=True)
     user1 = serializers.StringRelatedField(read_only=True)
     user2 = serializers.StringRelatedField(read_only=True)
+    creation_date = serializers.DateTimeField(read_only=True)
+    modification_date = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = Transaction
-        fields = ["token", "user1", "user2", "friend_code"]
+        fields = [
+            "token",
+            "user1",
+            "user2",
+            "friend_code",
+            "creation_date",
+            "modification_date",
+        ]
 
     def validate(self, data):
         friend_code = data.pop("friend_code")
