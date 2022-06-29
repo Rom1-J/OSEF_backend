@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.db.models import Q
 from django.urls import reverse
 from django.utils.translation import gettext as _
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, status
 from rest_framework.mixins import (
     CreateModelMixin,
@@ -132,6 +133,8 @@ class FilesViewSet(
     permission_classes = [permissions.IsAuthenticated]
     queryset = File.objects.all()
     lookup_field = "id"
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["transaction__token"]
 
     def get_queryset(self, *args, **kwargs):
         assert isinstance(self.request.user.id, uuid.UUID)  # type: ignore
