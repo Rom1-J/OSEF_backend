@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from osef.apps.users.models import User
@@ -28,6 +29,14 @@ class Transaction(models.Model):
     )
 
     accepted = models.BooleanField(default=False)
+
+    creation_date = models.DateTimeField(
+        _("Creation Date"), default=timezone.now, editable=False
+    )
+
+    modification_date = models.DateTimeField(
+        _("Last modification Date"), default=timezone.now
+    )
 
     def get_file_count(self):
         """Get the number of unread files
@@ -78,3 +87,7 @@ class File(models.Model):
     )
 
     times_downloaded = models.IntegerField(_("Times Downloaded"), default=0)
+
+    creation_date = models.DateTimeField(
+        _("Creation Date"), default=timezone.now, editable=False
+    )
