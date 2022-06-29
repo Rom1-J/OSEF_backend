@@ -39,7 +39,7 @@ class FileAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             _("Global"),
-            {"fields": ("file", "filename", "nonce", "transaction")},
+            {"fields": ("file", "nonce", "transaction")},
         ),
         (
             _("Clients info"),
