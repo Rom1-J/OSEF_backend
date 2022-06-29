@@ -35,7 +35,7 @@ class User(AbstractUser):
             },
         )
 
-    def generate_salt(self):
+    def salt(self):
         """Get unique salt for user's key creation.
         DO NOT STORE IT OR SHARE THE METHOD.
 
@@ -43,4 +43,6 @@ class User(AbstractUser):
             str: Unique salt for user
         """
 
-        return hashlib.sha256(self.id + self.email).hexdigest()
+        return hashlib.sha256(
+            (str(self.id) + self.email + self.password).encode("utf-8")
+        ).hexdigest()
