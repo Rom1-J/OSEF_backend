@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from osef.apps.users.models import User
 
-from ..models import Transaction
+from ..models import File, Transaction
 
 
 class TransactionSerializer(serializers.ModelSerializer):
@@ -37,5 +37,56 @@ class TransactionSerializer(serializers.ModelSerializer):
         ) and user2 != self.context["request"].user:
             data["user1"] = self.context["request"].user
             data["user2"] = user2
+
+        return data
+
+
+# =============================================================================
+# =============================================================================
+
+
+class FileSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+
+    owner = serializers.StringRelatedField(read_only=True)
+    receiver = serializers.StringRelatedField(read_only=True)
+
+    filename = serializers.StringRelatedField(read_only=True)
+
+    times_downloaded = serializers.IntegerField(read_only=True)
+    creation_date = serializers.DateTimeField(read_only=True)
+
+    class Meta:
+        model = File
+        fields = [
+            "id",
+            "file",
+            "filename",
+            "nonce",
+            "owner",
+            "receiver",
+            "transaction",
+            "times_downloaded",
+            "creation_date",
+        ]
+
+    # =========================================================================
+
+    def validate_transaction(self, value: Transaction):
+        if self.context["request"].user not in (value.user1, value.user2):
+            raise serializers.ValidationError("Unknown transaction.")
+
+        return value
+
+    def validate(self, data):
+        owner = self.context["request"].user
+        data["owner"] = owner
+
+        transaction = data["transaction"]
+        data["receiver"] = (
+            transaction.user1
+            if owner == transaction.user2
+            else transaction.user2
+        )
 
         return data
