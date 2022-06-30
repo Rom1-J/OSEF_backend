@@ -33,6 +33,7 @@ class TestUserViewSet:
             "avatar": user.avatar or None,
             "friend_code": user.friend_code,
             "pub_key": str(user.pub_key),
+            "email": user.email,
             "url": f"http://testserver/api/users/{user.id}/",
             "salt": user.salt(),
         }
