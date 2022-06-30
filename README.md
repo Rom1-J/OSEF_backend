@@ -7,6 +7,33 @@ Open Storage for Encrypted Files
 
 License: GPLv3
 
+## Project Purpose
+
+**OSEF** is a wep app, used to send end-to-end ecrypted files to your contacts.
+Create a account, share your friend code to your friends, and you will be able to send files up to 20 Mb through our secure service. Unless many end-to-end ecryption services, you can use OSEF on different devices, using the same account!
+
+### How does it work ?
+
+- Create an account, and the server tells you if your password match a minimal robustness to go further.
+- Validate your account in your mails
+- At each login, keys will be generated client-side, keeping the secret one, and sending the oublic to the server. It will allow you to share files with other people
+- Send your friend code to someone by the way you prefer, or add a friend, and it will open a discussion page.
+- In this page, you will be able to send files to your contact.
+- Each files are encrypted with your relatives keys at the time you upload it to your browser. Files will be send and saved encrypted, meaning that nobody else than you and your contact will be able to see their content, not even us!
+
+### Things to know
+
+- Login and encryption processes may take few seconds to complete, because of complex security functions
+- Your secret key is stored only in your browser, and just the time of your session. It is never sent anywhere else. So do you, **NEVER SHARE IT**, or your files could be decrypted by someone else. Same thing for your password.
+- Talking about password, use a strong password (min. 12 length, with capital letters, special caracters and numbers) and never forget it.
+- If you ever change your **username, email, or password**, all your past files **won't be accessible anymore!** (because a new key will be generated, so it won't match the last one)
+
+
+This is a school project after all, so things could be missing. Feel free to reach us, and tell us about that! 
+
+
+-----
+
 ## Settings
 
 Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
