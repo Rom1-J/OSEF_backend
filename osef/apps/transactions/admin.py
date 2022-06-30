@@ -39,7 +39,7 @@ class FileAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             _("Global"),
-            {"fields": ("file", "transaction")},
+            {"fields": ("file", "nonce", "transaction")},
         ),
         (
             _("Clients info"),
@@ -52,9 +52,10 @@ class FileAdmin(admin.ModelAdmin):
         ),
     )
 
-    list_display = ["id", "owner", "receiver"]
+    list_display = ["id", "filename", "owner", "receiver"]
     search_fields = [
         "id",
+        "filename",
         "owner__id",
         "owner__friend_code",
         "owner__username",

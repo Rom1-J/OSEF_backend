@@ -59,7 +59,11 @@ class File(models.Model):
         default=uuid.uuid4,
         editable=False,
     )
+
     file = models.FileField(_("File"))
+    filename = models.TextField(_("File name"), default="Unknown")
+    nonce = models.CharField(_("File nonce"), max_length=255)
+
     owner = models.ForeignKey(
         User,
         verbose_name="Owner Id",
@@ -91,3 +95,11 @@ class File(models.Model):
     creation_date = models.DateTimeField(
         _("Creation Date"), default=timezone.now, editable=False
     )
+
+    # =========================================================================
+
+    def save(self, *args, **kwargs):
+        self.filename = self.file.name
+        self.file.name = str(self.id)
+
+        super().save(*args, **kwargs)

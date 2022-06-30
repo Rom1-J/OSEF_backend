@@ -7,7 +7,7 @@ from osef.apps.users.models import User
 pytestmark = pytest.mark.django_db
 
 
-class TestUserViewSet:
+class TestTransactionsViewSet:
     def test_get_queryset(self, user: User, rf: RequestFactory):
         view = UserViewSet()
         request = rf.get("/fake-url/")

@@ -68,6 +68,7 @@ class TestFileAdmin:
                 "file": SimpleUploadedFile(
                     "file.txt", b"file content", content_type="text/plain"
                 ),
+                "nonce": "randomNonce",
                 "transaction": transaction.token,
                 "owner": transaction.user1.id,
                 "receiver": transaction.user2.id,

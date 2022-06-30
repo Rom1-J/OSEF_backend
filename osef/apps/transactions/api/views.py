@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.db.models import Q
 from django.urls import reverse
 from django.utils.translation import gettext as _
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, status
 from rest_framework.mixins import (
     CreateModelMixin,
@@ -15,8 +16,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from ..models import Transaction
-from .serializers import TransactionSerializer
+from ..models import File, Transaction
+from .serializers import FileSerializer, TransactionSerializer
 
 
 class TransactionsViewSet(
@@ -118,4 +119,50 @@ class TransactionsViewSet(
                 },
             },
             status=status.HTTP_200_OK,
+        )
+
+
+# =============================================================================
+# =============================================================================
+
+
+class FilesViewSet(
+    RetrieveModelMixin, ListModelMixin, CreateModelMixin, GenericViewSet
+):
+    serializer_class = FileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = File.objects.all()
+    lookup_field = "id"
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["transaction__token"]
+
+    def get_queryset(self, *args, **kwargs):
+        assert isinstance(self.request.user.id, uuid.UUID)  # type: ignore
+        return self.queryset.filter(
+            Q(transaction__user1=self.request.user)  # type: ignore
+            | Q(transaction__user2=self.request.user)  # type: ignore
+        )
+
+    def perform_create(self, serializer: FileSerializer) -> None:
+        if serializer.is_valid():
+            file: File = serializer.save()
+
+            send_mail(
+                subject=_("%s sent you a file!") % file.owner,
+                message=_("Hi %s, you have received a new file!")
+                % file.receiver,
+                from_email="no-reply@osef.net",
+                recipient_list=[file.receiver.email],
+            )
+
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        self.perform_create(serializer)
+
+        return Response(
+            {"status": "success", "message": "File sent..."},
+            status=status.HTTP_201_CREATED,
+            headers=self.get_success_headers(serializer.data),
         )
