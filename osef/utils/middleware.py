@@ -1,7 +1,6 @@
 from django.core.handlers.wsgi import WSGIRequest
 from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
-from rich import inspect
 
 
 class AppendSlash(MiddlewareMixin):
@@ -10,4 +9,3 @@ class AppendSlash(MiddlewareMixin):
             return redirect(request.path + "/")
 
         return self.get_response(request)
-
