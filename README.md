@@ -29,7 +29,7 @@ Create a account, share your friend code to your friends, and you will be able t
 - If you ever change your **username, email, or password**, all your past files **won't be accessible anymore!** (because a new key will be generated, so it won't match the last one)
 
 
-This is a school project after all, so things could be missing. Feel free to reach us, and tell us about that! 
+This is a school project after all, so things could be missing. Feel free to reach us, and tell us about that!
 
 
 -----
