@@ -54,8 +54,7 @@ class TransactionsViewSet(
                 message=_(
                     "Hi %s, please add me to your OSEF network "
                     "<a href='%s'>%s</a>"
-                )
-                % (user1.username, accept_url, accept_url),
+                ) % (user1.username, accept_url, accept_url),
                 from_email="no-reply@osef.net",
                 recipient_list=[user2.email],
             )
@@ -64,13 +63,29 @@ class TransactionsViewSet(
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        self.perform_create(serializer)
+        user1 = serializer.validated_data["user1"]
+        user2 = serializer.validated_data["user2"]
+        accepted = serializer.validated_data["accepted"]
 
-        return Response(
-            {"status": "success", "message": "Transaction pending..."},
-            status=status.HTTP_201_CREATED,
-            headers=self.get_success_headers(serializer.data),
-        )
+        if (user1 and user2) and Transaction.objects.filter(
+            Q(Q(user1=user1) & Q(user2=user2))
+            | Q(Q(user2=user1) & Q(user1=user2))
+        ).count() > 0:
+
+            return Response(
+                {"message": "Ce contact existe déjà" if accepted else "Une demande a déjà été envoyée"},
+                status=status.HTTP_302_FOUND,
+                headers=self.get_success_headers(serializer.data),
+            )
+
+        else:
+            self.perform_create(serializer)
+
+            return Response(
+                {"status": "success", "message": "Transaction pending..."},
+                status=status.HTTP_201_CREATED,
+                headers=self.get_success_headers(serializer.data),
+            )
 
     # =========================================================================
 
@@ -84,9 +99,9 @@ class TransactionsViewSet(
             instance.save()
             send_mail(
                 subject=_("%s has accepted to connect")
-                % instance.user2.username,
+                        % instance.user2.username,
                 message=_("Hi %s, %s has just accepted your connection!")
-                % (instance.user1.username, instance.user2.username),
+                        % (instance.user1.username, instance.user2.username),
                 from_email="no-reply@osef.net",
                 recipient_list=[instance.user1.email],
             )
@@ -150,7 +165,7 @@ class FilesViewSet(
             send_mail(
                 subject=_("%s sent you a file!") % file.owner,
                 message=_("Hi %s, you have received a new file!")
-                % file.receiver,
+                        % file.receiver,
                 from_email="no-reply@osef.net",
                 recipient_list=[file.receiver.email],
             )

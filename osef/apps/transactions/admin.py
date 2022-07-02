@@ -13,12 +13,13 @@ class TransactionAdmin(admin.ModelAdmin):
                 "fields": (
                     "user1",
                     "user2",
+                    "accepted",
                 )
             },
         ),
     )
 
-    list_display = ["token", "user1", "user2", "get_file_count"]
+    list_display = ["token", "user1", "user2", "accepted", "get_file_count"]
     search_fields = [
         "token",
         "user1__id",
