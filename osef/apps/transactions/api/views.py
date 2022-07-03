@@ -64,13 +64,33 @@ class TransactionsViewSet(
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        self.perform_create(serializer)
+        user1 = serializer.validated_data["user1"]
+        user2 = serializer.validated_data["user2"]
+        accepted = serializer.validated_data["accepted"]
 
-        return Response(
-            {"status": "success", "message": "Transaction pending..."},
-            status=status.HTTP_201_CREATED,
-            headers=self.get_success_headers(serializer.data),
-        )
+        if (user1 and user2) and Transaction.objects.filter(
+            Q(Q(user1=user1) & Q(user2=user2))
+            | Q(Q(user2=user1) & Q(user1=user2))
+        ).count() > 0:
+
+            return Response(
+                {
+                    "message": "Ce contact existe déjà"
+                    if accepted
+                    else "Une demande a déjà été envoyée"
+                },
+                status=status.HTTP_302_FOUND,
+                headers=self.get_success_headers(serializer.data),
+            )
+
+        else:
+            self.perform_create(serializer)
+
+            return Response(
+                {"status": "success", "message": "Transaction pending..."},
+                status=status.HTTP_201_CREATED,
+                headers=self.get_success_headers(serializer.data),
+            )
 
     # =========================================================================
 

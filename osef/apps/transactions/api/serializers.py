@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import serializers
 
 from osef.apps.users.models import User
@@ -15,6 +16,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     user2 = serializers.StringRelatedField(read_only=True)
     creation_date = serializers.DateTimeField(read_only=True)
     modification_date = serializers.DateTimeField(read_only=True)
+    accepted = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Transaction
@@ -25,18 +27,28 @@ class TransactionSerializer(serializers.ModelSerializer):
             "friend_code",
             "creation_date",
             "modification_date",
+            "accepted",
         ]
 
     def validate(self, data):
         friend_code = data.pop("friend_code")
         data["user1"] = None
         data["user2"] = None
+        data["accepted"] = None
 
         if (
             user2 := User.objects.filter(friend_code=friend_code).first()
         ) and user2 != self.context["request"].user:
-            data["user1"] = self.context["request"].user
+            user1 = self.context["request"].user
+            data["user1"] = user1
             data["user2"] = user2
+
+            transaction = Transaction.objects.filter(
+                Q(Q(user1=user1) & Q(user2=user2))
+                | Q(Q(user2=user1) & Q(user1=user2))
+            ).first()
+
+            data["accepted"] = transaction.accepted if transaction else False
 
         return data
 

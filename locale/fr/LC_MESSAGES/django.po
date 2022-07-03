@@ -1,0 +1,210 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Thomas <thomas.kock@efrei.net>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-01 12:11+0200\n"
+"PO-Revision-Date: 2022-07-02 18:25+0200\n"
+"Last-Translator: Thomas <thomas.kock@efrei.net>\n"
+"Language-Team: French <kde-i18n-doc@kde.org>\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 22.04.2\n"
+
+#: osef/apps/transactions/admin.py:11 osef/apps/transactions/admin.py:45
+msgid "Clients info"
+msgstr "Info client"
+
+#: osef/apps/transactions/admin.py:41
+msgid "Global"
+msgstr "Global"
+
+#: osef/apps/transactions/api/views.py:53
+#, python-format
+msgid "%s asked to connect"
+msgstr "%s veut se connecter avec vous"
+
+#: osef/apps/transactions/api/views.py:55
+#, python-format
+msgid "Hi %s, please add me to your OSEF network <a href='%s'>%s</a>"
+msgstr "Salut %s, merci de m'ajouter à votre réseaux OSEF <a href='%s'>%s</a>"
+
+#: osef/apps/transactions/api/views.py:86
+#, python-format
+msgid "%s has accepted to connect"
+msgstr "%s a accepté de se connecter avec vous"
+
+#: osef/apps/transactions/api/views.py:88
+#, python-format
+msgid "Hi %s, %s has just accepted your connection!"
+msgstr "Bonjour %s, %s vient juste d'accepter votre demande de connexion !"
+
+#: osef/apps/transactions/api/views.py:151
+#, python-format
+msgid "%s sent you a file!"
+msgstr "%s vous a envoyé un fichier !"
+
+#: osef/apps/transactions/api/views.py:152
+#, python-format
+msgid "Hi %s, you have received a new file!"
+msgstr "Bonjour %s, vous avez reçu un nouveau fichier !"
+
+#: osef/apps/transactions/apps.py:7
+msgid "Transactions"
+msgstr ""
+
+#: osef/apps/transactions/models.py:12
+msgid "Token"
+msgstr "Jeton"
+
+#: osef/apps/transactions/models.py:34 osef/apps/transactions/models.py:96
+msgid "Creation Date"
+msgstr "Date de création"
+
+#: osef/apps/transactions/models.py:38
+msgid "Last modification Date"
+msgstr "Date de dernière modification"
+
+#: osef/apps/transactions/models.py:57 osef/apps/users/models.py:13
+msgid "Identification"
+msgstr ""
+
+#: osef/apps/transactions/models.py:63
+msgid "File"
+msgstr "Fichier"
+
+#: osef/apps/transactions/models.py:64
+msgid "File name"
+msgstr "Nom du fichier"
+
+#: osef/apps/transactions/models.py:65
+msgid "File nonce"
+msgstr ""
+
+#: osef/apps/transactions/models.py:93
+msgid "Times Downloaded"
+msgstr "Nombre de téléchargements"
+
+#: osef/apps/users/admin.py:18
+msgid "Personal info"
+msgstr "Informations personnelles"
+
+#: osef/apps/users/admin.py:30
+msgid "Permissions"
+msgstr "Permissions"
+
+#: osef/apps/users/admin.py:41
+msgid "Important dates"
+msgstr "Dates importantes"
+
+#: osef/apps/users/api/views.py:33
+msgid "Forbidden"
+msgstr "Interdit"
+
+#: osef/apps/users/apps.py:7
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: osef/apps/users/forms.py:25 osef/apps/users/tests/test_forms.py:41
+msgid "This username has already been taken."
+msgstr "Ce nom d'utilisateur est déjà pris"
+
+#: osef/apps/users/models.py:18
+msgid "Avatar"
+msgstr "Avatar"
+
+#: osef/apps/users/models.py:20
+msgid "Friend code"
+msgstr "Code d'amis"
+
+#: osef/apps/users/models.py:22
+msgid "Public Key"
+msgstr "Clé publique"
+
+#: osef/apps/users/views.py:29
+msgid "Information successfully updated"
+msgstr "Informations mises à jour avec succès "
+
+#: osef/apps/vue/apps.py:7
+msgid "Vue"
+msgstr ""
+
+#: osef/templates/account/email/base_message.html:4
+#, python-format
+msgid "Hello from %(site_name)s!"
+msgstr "Salut depuis %(site_name)s!"
+
+#: osef/templates/account/email/base_message.html:8
+#, python-format
+msgid ""
+"Thank you for using %(site_name)s!\n"
+"%(site_domain)s"
+msgstr ""
+"Merci d'utiliser %(site_name)s !\n"
+"%(site_domain)s"
+
+#: osef/templates/account/email/email_confirmation_message.html:5
+#, python-format
+msgid ""
+"You're receiving this e-mail because user %(user_display)s has given your e-"
+"mail address to register an account on %(site_domain)s.\n"
+"\n"
+"To confirm this is correct, go to %(activate_url)s"
+msgstr ""
+"Vous recevez cet e-mail car l'utilisateur %(user_display)s a indiqué votre "
+"adresse pour se connecter à son compte sur %(site_domain)s.\n"
+"\n"
+"Pour confirmer que vous en êtes bien le propriétaire, allez à "
+"%(activate_url)s"
+
+#: osef/templates/account/email/email_confirmation_subject.html:3
+msgid "Please Confirm Your E-mail Address"
+msgstr "Confirmez votre adresse e-mail"
+
+#: osef/templates/account/email/password_reset_key_message.html:4
+msgid ""
+"You're receiving this e-mail because you or someone else has requested a "
+"password for your user account.\n"
+"It can be safely ignored if you did not request a password reset. Click the "
+"link below to reset your password."
+msgstr ""
+"Vous recevez cet e-mail car vous ou quelqu'un d'autre a demandé le mot de "
+"passe pour votre compte utilisateur.\n"
+"Vous pouvez simplement ignorer ce message si vous n'êtes pas à l'origine de "
+"cette demande. Sinon, cliquez sur le lien ci-dessous pour réinitialiser "
+"votre mot de passe."
+
+#: osef/templates/account/email/password_reset_key_message.html:9
+#, python-format
+msgid "In case you forgot, your username is %(username)s."
+msgstr ""
+"Au cas où vous l'auriez oublié, votre nom d'utilisateur est %(username)s."
+
+#: osef/templates/account/email/password_reset_key_subject.html:3
+#: osef/templates/account/email/unknown_account_subject.html:3
+msgid "Password Reset E-mail"
+msgstr "E-mail de réinitialisation de mot de passe"
+
+#: osef/templates/account/email/unknown_account_message.html:4
+#, python-format
+msgid ""
+"You are receiving this e-mail because you or someone else has requested a\n"
+"password for your user account. However, we do not have any record of a "
+"user\n"
+"with email %(email)s in our database.\n"
+"\n"
+"This mail can be safely ignored if you did not request a password reset.\n"
+"\n"
+"If it was you, you can sign up for an account using the link below."
+msgstr ""
+"Vous recevez cet e-mail car vous ou quelqu'un d'autre a demandé le mot de "
+"passe pour votre compte utilisateur.\n"
+"Vous pouvez simplement ignorer ce message si vous n'êtes pas à l'origine de "
+"cette demande. Sinon, cliquez sur le lien ci-dessous pour réinitialiser "
+"votre mot de passe."
