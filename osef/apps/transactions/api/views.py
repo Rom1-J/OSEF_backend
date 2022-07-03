@@ -55,7 +55,7 @@ class TransactionsViewSet(
                     "Hi %s, please add me to your OSEF network "
                     "<a href='%s'>%s</a>"
                 )
-                        % (user1.username, accept_url, accept_url),
+                % (user1.username, accept_url, accept_url),
                 from_email="no-reply@osef.net",
                 recipient_list=[user2.email],
             )
@@ -104,9 +104,9 @@ class TransactionsViewSet(
             instance.save()
             send_mail(
                 subject=_("%s has accepted to connect")
-                        % instance.user2.username,
+                % instance.user2.username,
                 message=_("Hi %s, %s has just accepted your connection!")
-                        % (instance.user1.username, instance.user2.username),
+                % (instance.user1.username, instance.user2.username),
                 from_email="no-reply@osef.net",
                 recipient_list=[instance.user1.email],
             )
