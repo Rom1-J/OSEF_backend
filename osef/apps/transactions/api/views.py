@@ -53,7 +53,8 @@ class TransactionsViewSet(
                 subject=_("%s asked to connect") % user1.username,
                 message=_(
                     "Hi %s, please add me to your OSEF network "
-                    "<a href='https://osef.enpls.org/%s'>https://osef.enpls.org/%s</a>"
+                    "<a href='https://osef.enpls.org/%s'>"
+                    "https://osef.enpls.org/%s</a>"
                 )
                 % (user2.username, accept_url, accept_url),
                 from_email="osef@gnous.eu",

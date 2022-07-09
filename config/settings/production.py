@@ -94,22 +94,6 @@ EMAIL_SUBJECT_PREFIX = env(
 # Django Admin URL regex.
 ADMIN_URL = env("DJANGO_ADMIN_URL")
 
-# Anymail
-# -----------------------------------------------------------------------------
-# https://anymail.readthedocs.io/en/stable/installation/#installing-anymail
-# INSTALLED_APPS += ["anymail"]  # noqa F405
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-# https://anymail.readthedocs.io/en/stable/installation/
-# #anymail-settings-reference
-# https://anymail.readthedocs.io/en/stable/esps/mailgun/
-# EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
-# ANYMAIL = {
-    # "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),
-    # "MAILGUN_SENDER_DOMAIN": env("MAILGUN_DOMAIN"),
-    # "MAILGUN_API_URL": env(
-        # "MAILGUN_API_URL", default="https://api.mailgun.net/v3"
-    # ),
-# }
 
 # django-compressor
 # -----------------------------------------------------------------------------
@@ -207,4 +191,7 @@ EMAIL_USE_TLS = env.bool("DJANGO_EMAIL_USE_TLS", default=True)
 EMAIL_PORT = env.int("DJANGO_EMAIL_PORT", 587)
 EMAIL_HOST_USER = env("DJANGO_EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("DJANGO_EMAIL_HOST_PASSWORD")
-CSRF_TRUSTED_ORIGINS = env.list("DJANGO_CSRF_TRUSTED_ORIGINS", default=["example.com"])
+
+CSRF_TRUSTED_ORIGINS = env.list(
+    "DJANGO_CSRF_TRUSTED_ORIGINS", default=["example.com"]
+)
