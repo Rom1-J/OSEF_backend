@@ -190,7 +190,7 @@ STATICFILES_FINDERS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = str(APPS_DIR / "media")
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
-MEDIA_URL = "/media/"
+MEDIA_URL = "https://osef.enpls.org/media/"
 
 # TEMPLATES
 # -----------------------------------------------------------------------------
@@ -257,7 +257,7 @@ EMAIL_TIMEOUT = 5
 # Django Admin URL.
 ADMIN_URL = "admin/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("""J'Hack Sparrow""", "j'hack-sparrow@example.com")]
+ADMINS = [("""J'Hack Sparrow""", "admin@gnous.eu")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 
@@ -348,7 +348,7 @@ SPECTACULAR_SETTINGS = {
             "url": "http://127.0.0.1:8000",
             "description": "Local Development server",
         },
-        {"url": "https://example.com", "description": "Production server"},
+        {"url": "https://osef.enpls.org", "description": "Production server"},
     ],
 }
 # Your stuff...

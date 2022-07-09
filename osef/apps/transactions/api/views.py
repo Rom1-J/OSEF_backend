@@ -53,10 +53,10 @@ class TransactionsViewSet(
                 subject=_("%s asked to connect") % user1.username,
                 message=_(
                     "Hi %s, please add me to your OSEF network "
-                    "<a href='%s'>%s</a>"
+                    "<a href='https://osef.enpls.org/%s'>https://osef.enpls.org/%s</a>"
                 )
-                % (user1.username, accept_url, accept_url),
-                from_email="no-reply@osef.net",
+                % (user2.username, accept_url, accept_url),
+                from_email="osef@gnous.eu",
                 recipient_list=[user2.email],
             )
 
@@ -107,7 +107,7 @@ class TransactionsViewSet(
                 % instance.user2.username,
                 message=_("Hi %s, %s has just accepted your connection!")
                 % (instance.user1.username, instance.user2.username),
-                from_email="no-reply@osef.net",
+                from_email="osef@gnous.eu",
                 recipient_list=[instance.user1.email],
             )
 
@@ -171,7 +171,7 @@ class FilesViewSet(
                 subject=_("%s sent you a file!") % file.owner,
                 message=_("Hi %s, you have received a new file!")
                 % file.receiver,
-                from_email="no-reply@osef.net",
+                from_email="osef@gnous.eu",
                 recipient_list=[file.receiver.email],
             )
 
