@@ -22,6 +22,22 @@ class VueCSSView(View):
         return HttpResponse(status=404)
 
 
+class VueThemesView(View):
+    template_name = "dist/themes/"
+
+    def get(self, request: WSGIRequest, path=""):
+        file_path = settings.ROOT_DIR / VUE_TEMPLATE_PATH / self.template_name
+
+        local_path = file_path / path
+
+        if local_path.exists() and local_path.is_file():
+            return HttpResponse(
+                local_path.read_text(), content_type="text/css"
+            )
+
+        return HttpResponse(status=404)
+
+
 class VueJSView(View):
     template_name = "dist/js/"
 

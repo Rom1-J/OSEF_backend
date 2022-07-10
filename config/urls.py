@@ -68,6 +68,5 @@ if settings.DEBUG:
         ] + urlpatterns
 
 urlpatterns += [
-    path("i18n/", include("django.conf.urls.i18n")),
     path("", include("osef.apps.vue.urls")),
 ]
