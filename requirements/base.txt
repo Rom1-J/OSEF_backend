@@ -26,4 +26,4 @@ django-jazzmin==2.5.0  # https://github.com/farridav/django-jazzmin
 dj-rest-auth[with_social]==2.2.4
 django_filter==22.1
 
-django-extensions==3.1.5  # https://github.com/django-extensions/django-extensions
+django-extensions==3.2.0  # https://github.com/django-extensions/django-extensions
