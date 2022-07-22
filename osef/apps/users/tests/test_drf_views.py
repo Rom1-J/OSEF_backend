@@ -34,6 +34,6 @@ class TestUserViewSet:
             "friend_code": user.friend_code,
             "pub_key": str(user.pub_key),
             "email": user.email,
-            "url": f"http://testserver/api/users/{user.id}/",
+            "url": f"/api/users/{user.id}/",
             "salt": user.salt(),
         }

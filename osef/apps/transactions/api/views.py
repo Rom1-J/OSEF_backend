@@ -20,7 +20,7 @@ from ..models import File, Transaction
 from .serializers import FileSerializer, TransactionSerializer
 
 
-class TransactionsViewSet(
+class TransactionViewSet(
     RetrieveModelMixin, ListModelMixin, CreateModelMixin, GenericViewSet
 ):
     serializer_class = TransactionSerializer
@@ -53,8 +53,8 @@ class TransactionsViewSet(
                 subject=_("%s asked to connect") % user1.username,
                 message=_(
                     "Hi %s, please add me to your OSEF network "
-                    "<a href='https://osef.enpls.org/%s'>"
-                    "https://osef.enpls.org/%s</a>"
+                    "<a href='https://osef.gnous.eu/%s'>"
+                    "https://osef.gnous.eu/%s</a>"
                 )
                 % (user2.username, accept_url, accept_url),
                 from_email="osef@gnous.eu",
@@ -99,6 +99,7 @@ class TransactionsViewSet(
         self, request: Request, *args: Any, **kwargs: Any
     ) -> Response:
         instance: Transaction = self.get_object()
+        message = ""
 
         if (instance.user2 == self.request.user) and not instance.accepted:
             instance.accepted = True
@@ -111,33 +112,13 @@ class TransactionsViewSet(
                 from_email="osef@gnous.eu",
                 recipient_list=[instance.user1.email],
             )
-
-            return Response(
-                {
-                    "status": "success",
-                    "message": "Transaction accepted!",
-                    "data": {
-                        "token": instance.token,
-                        "user1": str(instance.user1),
-                        "user2": str(instance.user2),
-                        "creation_date": str(instance.creation_date),
-                        "modification_date": str(instance.modification_date),
-                    },
-                },
-                status=status.HTTP_200_OK,
-            )
+            message = "Transaction accepted!"
 
         return Response(
             {
                 "status": "success",
-                "message": "",
-                "data": {
-                    "token": instance.token,
-                    "user1": str(instance.user1),
-                    "user2": str(instance.user2),
-                    "creation_date": str(instance.creation_date),
-                    "modification_date": str(instance.modification_date),
-                },
+                "message": message,
+                "data": TransactionSerializer(instance).data,
             },
             status=status.HTTP_200_OK,
         )
@@ -147,7 +128,7 @@ class TransactionsViewSet(
 # =============================================================================
 
 
-class FilesViewSet(
+class FileViewSet(
     RetrieveModelMixin, ListModelMixin, CreateModelMixin, GenericViewSet
 ):
     serializer_class = FileSerializer

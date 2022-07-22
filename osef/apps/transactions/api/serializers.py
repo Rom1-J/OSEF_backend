@@ -10,7 +10,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     class UserField(serializers.RelatedField):
         @staticmethod
         def to_representation(value: User):
-            return {value.username: value.pub_key}
+            return {"username": value.username, "pub_key": value.pub_key}
 
     friend_code = serializers.CharField(
         min_length=6, max_length=6, write_only=True
@@ -19,8 +19,8 @@ class TransactionSerializer(serializers.ModelSerializer):
     token = serializers.UUIDField(read_only=True)
     user1 = UserField(read_only=True)
     user2 = UserField(read_only=True)
-    creation_date = serializers.DateTimeField(read_only=True)
-    modification_date = serializers.DateTimeField(read_only=True)
+    created_at = serializers.DateTimeField(read_only=True)
+    updated_at = serializers.DateTimeField(read_only=True)
     accepted = serializers.BooleanField(read_only=True)
 
     class Meta:
@@ -30,8 +30,8 @@ class TransactionSerializer(serializers.ModelSerializer):
             "user1",
             "user2",
             "friend_code",
-            "creation_date",
-            "modification_date",
+            "created_at",
+            "updated_at",
             "accepted",
         ]
 
@@ -71,7 +71,7 @@ class FileSerializer(serializers.ModelSerializer):
     filename = serializers.StringRelatedField(read_only=True)
 
     times_downloaded = serializers.IntegerField(read_only=True)
-    creation_date = serializers.DateTimeField(read_only=True)
+    created_at = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = File
@@ -84,7 +84,7 @@ class FileSerializer(serializers.ModelSerializer):
             "receiver",
             "transaction",
             "times_downloaded",
-            "creation_date",
+            "created_at",
         ]
 
     # =========================================================================

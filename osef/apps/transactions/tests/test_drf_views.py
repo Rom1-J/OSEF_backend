@@ -1,39 +1,42 @@
 import pytest
 from django.test import RequestFactory
 
-from osef.apps.users.api.views import UserViewSet
-from osef.apps.users.models import User
+from osef.apps.transactions.api.views import TransactionViewSet
+from osef.apps.transactions.models import Transaction
 
 pytestmark = pytest.mark.django_db
 
 
 class TestTransactionsViewSet:
-    def test_get_queryset(self, user: User, rf: RequestFactory):
-        view = UserViewSet()
+    def test_get_queryset(self, transaction: Transaction, rf: RequestFactory):
+        view = TransactionViewSet()
         request = rf.get("/fake-url/")
-        request.user = user
+        request.user = transaction.user2
 
         view.request = request
 
-        assert user in view.get_queryset()
+        assert transaction in view.get_queryset()
 
-    def test_me(self, user: User, rf: RequestFactory):
-        view = UserViewSet()
+    def test_me(self, transaction: Transaction, rf: RequestFactory):
+        view_detail = TransactionViewSet.as_view({"get": "retrieve"})
         request = rf.get("/fake-url/")
-        request.user = user
+        request.user = transaction.user2
 
-        view.request = request
+        response = view_detail(request, token=transaction.token)
 
-        response = view.me(request)
+        cleaned_data = response.data["data"]
+        del cleaned_data["created_at"]  # fails when test for TZ
+        del cleaned_data["updated_at"]  # fails when test for TZ
 
-        assert response.data == {
-            "username": user.username,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "avatar": user.avatar or None,
-            "friend_code": user.friend_code,
-            "pub_key": str(user.pub_key),
-            "email": user.email,
-            "url": f"http://testserver/api/users/{user.id}/",
-            "salt": user.salt(),
+        assert cleaned_data == {
+            "token": str(transaction.token),
+            "user1": {
+                "username": str(transaction.user1),
+                "pub_key": str(transaction.user1.pub_key),
+            },
+            "user2": {
+                "username": str(transaction.user2),
+                "pub_key": str(transaction.user2.pub_key),
+            },
+            "accepted": True,
         }

@@ -8,6 +8,7 @@ from rest_framework.mixins import (
     RetrieveModelMixin,
     UpdateModelMixin,
 )
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
@@ -28,36 +29,6 @@ class UserViewSet(
         return self.queryset.filter(id=self.request.user.id)  # type: ignore
 
     @action(detail=False)
-    def me(self, request):
+    def me(self, request: Request):
         serializer = UserSerializer(request.user, context={"request": request})
         return Response(status=status.HTTP_200_OK, data=serializer.data)
-
-    @action(detail=False, methods=["PUT"])
-    def pubkey(self, request):
-        instance: User = User.objects.filter(id=request.user.id).first()
-
-        pub_key = request.data["pub_key"]
-        if pub_key:
-            instance.pub_key = pub_key
-            instance.save()
-            return Response(
-                {
-                    "status": "success",
-                    "message": "pub_key modified",
-                    "data": {
-                        "pub_key": instance.pub_key,
-                        "username": instance.username,
-                    },
-                },
-                status=status.HTTP_200_OK,
-            )
-        return Response(
-            {
-                "status": "failed",
-                "message": "Wrong key given",
-                "data": {
-                    "pub_key": pub_key,
-                },
-            },
-            status=status.HTTP_400_BAD_REQUEST,
-        )

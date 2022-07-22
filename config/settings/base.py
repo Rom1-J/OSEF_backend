@@ -92,6 +92,7 @@ LOCAL_APPS = [
     # Your stuff: custom apps go here
     "osef.apps.vue",
     "osef.apps.transactions",
+    "osef.apps.notifications",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -190,7 +191,7 @@ STATICFILES_FINDERS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = str(APPS_DIR / "media")
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
-MEDIA_URL = "https://osef.enpls.org/media/"
+MEDIA_URL = "https://osef.gnous.eu/media/"
 
 # TEMPLATES
 # -----------------------------------------------------------------------------
@@ -348,8 +349,17 @@ SPECTACULAR_SETTINGS = {
             "url": "http://127.0.0.1:8000",
             "description": "Local Development server",
         },
-        {"url": "https://osef.enpls.org", "description": "Production server"},
+        {"url": "https://osef.gnous.eu", "description": "Production server"},
     ],
 }
 # Your stuff...
 # -----------------------------------------------------------------------------
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8080",
+]
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    "http://127.0.0.1:8080",
+]
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8080", "http://127.0.0.1:8000"]

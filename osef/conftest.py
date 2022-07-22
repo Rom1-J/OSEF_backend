@@ -1,5 +1,8 @@
 import pytest
 
+from osef.apps.notifications.models import Notification
+from osef.apps.notifications.tests.factories import NotificationFactory
+from osef.apps.transactions.models import File, Transaction
 from osef.apps.transactions.tests.factories import (
     FileFactory,
     TransactionFactory,
@@ -29,10 +32,15 @@ def user2() -> User:
 
 
 @pytest.fixture
-def transaction() -> User:
+def transaction() -> Transaction:
     return TransactionFactory()
 
 
 @pytest.fixture
-def file() -> User:
+def file() -> File:
     return FileFactory()
+
+
+@pytest.fixture
+def notification() -> Notification:
+    return NotificationFactory()
