@@ -8,7 +8,7 @@ from ..models import Notification
 class NotificationSerializer(serializers.ModelSerializer):
     class UserField(serializers.RelatedField):
         @staticmethod
-        def to_representation(value: User):
+        def to_representation(value: User) -> dict[str, str]:
             return {"username": value.username, "pub_key": value.pub_key}
 
     type = serializers.StringRelatedField(
@@ -27,4 +27,5 @@ class NotificationSerializer(serializers.ModelSerializer):
             "type",
             "read",
             "created_at",
+            "updated_at",
         ]

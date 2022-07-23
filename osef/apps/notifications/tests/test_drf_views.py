@@ -30,6 +30,7 @@ class TestNotificationsViewSet:
 
         cleaned_data = response.data["data"]
         del cleaned_data["created_at"]  # fails when test for TZ
+        del cleaned_data["updated_at"]  # fails when test for TZ
 
         assert cleaned_data == {
             "id": str(notification.id),
@@ -44,3 +45,18 @@ class TestNotificationsViewSet:
             "type": notification.get_notification_type(),
             "read": True,
         }
+
+    def test_read(self, notification: Notification, arf: APIRequestFactory):
+        view_retrieve = NotificationViewSet.as_view({"get": "retrieve"})
+        request = arf.get("/fake-url/")
+        request.user = notification.receiver
+
+        assert not notification.read
+
+        view_retrieve(request, id=notification.id)
+
+        updated_notification = Notification.objects.filter(
+            id=notification.id
+        ).first()
+
+        assert updated_notification.read
