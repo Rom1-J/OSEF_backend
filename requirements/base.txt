@@ -22,7 +22,7 @@ drf-spectacular==0.25.1  # https://github.com/tfranzel/drf-spectacular
 
 # Custom
 # ------------------------------------------------------------------------------
-django-jazzmin==2.5.0  # https://github.com/farridav/django-jazzmin
+django-jazzmin==2.6.0  # https://github.com/farridav/django-jazzmin
 dj-rest-auth[with_social]==2.2.5
 django_filter==22.1
 
