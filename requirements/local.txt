@@ -35,7 +35,7 @@ pytest-django==4.5.2  # https://github.com/pytest-dev/pytest-django
 
 # Custom
 # ------------------------------------------------------------------------------
-rich==12.5.1
+rich==13.3.2
 
 pygments>=2.11.0
 bpython>=0.22.1
